@@ -1,22 +1,3 @@
-header {
-/*
- * Copyright (c) 2007, Red Hat Middleware, LLC. All rights reserved.
- *
- * This copyrighted material is made available to anyone wishing to use, modify,
- * copy, or redistribute it subject to the terms and conditions of the GNU
- * Lesser General Public License, v. 2.1. This program is distributed in the
- * hope that it will be useful, but WITHOUT A WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details. You should have received a
- * copy of the GNU Lesser General Public License, v.2.1 along with this
- * distribution; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- * Red Hat Author(s): Steve Ebersole
- */
-package org.fedorahosted.tennera.jgettext.catalog.parse;
-}
-
 /**
  * Defines a parser for the GNU gettext PO/POT file formats.
  * <p/>
@@ -24,11 +5,13 @@ package org.fedorahosted.tennera.jgettext.catalog.parse;
  * assumptions about the PO/POT structure that are true for DocBook masters, which is what it was intended to
  * deal with (as is jDocBook, so we can live with those assumptions).
  */
-class CatalogParser extends Parser;
+
+parser grammar CatalogParser;
 
 options {
-    exportVocab=Catalog;
-    buildAST=true;
+    superClass=Parser;
+//    exportVocab=Catalog;
+    output=AST;
     k=2;
 }
 
@@ -60,9 +43,28 @@ tokens {
     MESSAGE;
 }
 
-{
+@header {
+/*
+ * Copyright (c) 2007, Red Hat Middleware, LLC. All rights reserved.
+ *
+ * This copyrighted material is made available to anyone wishing to use, modify,
+ * copy, or redistribute it subject to the terms and conditions of the GNU
+ * Lesser General Public License, v. 2.1. This program is distributed in the
+ * hope that it will be useful, but WITHOUT A WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details. You should have received a
+ * copy of the GNU Lesser General Public License, v.2.1 along with this
+ * distribution; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * Red Hat Author(s): Steve Ebersole
+ */
+package org.fedorahosted.tennera.jgettext.catalog.parse;
+}
+
+@members {
     protected AST buildCatalogNode(AST messageBlocks) {
-        return #( [CATALOG, "catalog"], messageBlocks );
+        return $( [CATALOG, "catalog"], messageBlocks );
     }
 
     private AST buildMessageBlockNode(AST entries) {
@@ -78,7 +80,7 @@ tokens {
     }
 
     private AST buildMessageBlockNode(String text, AST entries) {
-        return #( [MESSAGE, text], entries );
+        return $( [MESSAGE, text], entries );
     }
 
 
@@ -133,9 +135,9 @@ tokens {
 /**
  * Main rule
  */
-catalog:
-    mb:messageBlocks {
-        #catalog = buildCatalogNode( #mb );
+catalog returns [AST result]:
+    mb=messageBlocks {
+        $result = buildCatalogNode( mb );
     }
     ;
 
@@ -150,19 +152,14 @@ messageBlocks:
 /**
  * A message block defines all the lines related to a single translatable message entry.
  */
-messageBlock:
+messageBlock returns [AST result]:
     ( previousMsgctxt )?
     ( previousMsgid )?
     ( previousMsgidPlural )?
     ( domain )?
-    ( entries | o:obsoleteEntries ) {
-        if ( #o == null ) {
-            #messageBlock = buildMessageBlockNode( #messageBlock );
-        }
-        else {
-            #messageBlock = buildObsoleteMessageBlockNode( #messageBlock );
-        }
-    }
+    ( entries            { $result = buildMessageBlockNode( $messageBlock ); }
+    | o=obsoleteEntries  { $result = buildObsoleteMessageBlockNode( $messageBlock ); }
+    )
     ;
 
 entries:
@@ -177,68 +174,68 @@ obsoleteEntries:
     ( OBSOLETE! msgstr | OBSOLETE! msgidPlural (OBSOLETE! msgstrPlural)+ )
     ;
 
-catalogComment: c:COMMENT {
-        handleCatalogComment( #c );
+catalogComment: c=COMMENT {
+        handleCatalogComment( $c );
     }
     ;
 
-extractedComment: c:EXTRACTION {
-        handleExtractedComment( #c );
+extractedComment: c=EXTRACTION {
+        handleExtractedComment( $c );
     }
     ;
 
-reference: r:REFERENCE {
-        handleReference( #r );
+reference: r=REFERENCE {
+        handleReference( $r );
     }
     ;
 
-flag: f:FLAG {
-        handleFlag( #f );
+flag: f=FLAG {
+        handleFlag( $f );
     }
     ;
 
-previousMsgctxt: pmc:PREV_MSGCTXT {
-        handlePreviousMsgctxt( #pmc );
+previousMsgctxt: pmc=PREV_MSGCTXT {
+        handlePreviousMsgctxt( $pmc );
     }
     ;
 
-previousMsgid: pmi:PREV_MSGID {
-        handlePreviousMsgid( #pmi );
+previousMsgid: pmi=PREV_MSGID {
+        handlePreviousMsgid( $pmi );
     }
     ;
 
-previousMsgidPlural: pmip:PREV_MSGID_PLURAL {
-        handlePreviousMsgidPlural( #pmip );
+previousMsgidPlural: pmip=PREV_MSGID_PLURAL {
+        handlePreviousMsgidPlural( $pmip );
     }
     ;
 
-domain: d:DOMAIN {
-        handleDomain( #d );
+domain: d=DOMAIN {
+        handleDomain( $d );
     }
     ;
 
-msgctxt: mc:MSGCTXT {
-        handleMsgctxt( #mc );
+msgctxt: mc=MSGCTXT {
+        handleMsgctxt( $mc );
     }
     ;
 
-msgid: mi:MSGID {
-        handleMsgid( #mi );
+msgid: mi=MSGID {
+        handleMsgid( $mi );
     }
     ;
 
-msgidPlural: mip:MSGID_PLURAL {
-        handleMsgidPlural( #mip );
+msgidPlural: mip=MSGID_PLURAL {
+        handleMsgidPlural( $mip );
     }
     ;
 
-msgstr: t:MSGSTR {
-        handleMsgstr( #t );
+msgstr: t=MSGSTR {
+        handleMsgstr( $t );
     }
     ;
 
-msgstrPlural: t:MSGSTR_PLURAL p:PLURALITY {
-        handleMsgstrPlural( #t, #p );
+msgstrPlural: t=MSGSTR_PLURAL p=PLURALITY {
+        handleMsgstrPlural( $t, $p );
     }
     ;
 
