@@ -11,7 +11,7 @@
 	<artifactId>tennera</artifactId>
 	<version>0.12-SNAPSHOT</version>
 	<name>Tennera</name>
-	<url>https://fedorahosted.org/tennera</url>
+	<url>https://github.com/zanata/tennera/</url>
 	<packaging>pom</packaging>
 	<description>Umbrella for several Java internationalisation
 		projects</description>
@@ -64,8 +64,7 @@
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License</name>
-			<url>http://www.gnu.org/copyleft/lesser.txt
-			</url>
+			<url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
