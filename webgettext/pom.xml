@@ -4,12 +4,11 @@
     <parent>
         <groupId>org.fedorahosted.tennera</groupId>
         <artifactId>tennera</artifactId>
-        <version>0.5-SNAPSHOT</version>
+        <version>0.12-SNAPSHOT</version>
     </parent>
     <groupId>org.fedorahosted.tennera</groupId>
     <artifactId>webgettext</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
     <name>Tennera WebGettext</name>
     <description>${name} supports multi-lingual messages in JSP web applications.  It includes a custom EL resolver for ResourceBundles, and can be used with Tennera Ant-Gettext to extract English strings from source JSPs into Gettext POT files.
 

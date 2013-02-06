@@ -1,7 +1,0 @@
-# License name
-#
-# license line 1
-# license line 2
-# license line 3
-msgid "test"
-msgstr "test"

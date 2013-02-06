@@ -9,6 +9,8 @@ JGettext
 
 JGettext includes an ANTLR-based parser for GNU Gettext PO/POT files and a PO/POT generator as well.
 
+Note that JGettext has moved to a new home: https://github.com/zanata/jgettext/
+
 
 Ant-Gettext (unmaintained)
 -----------

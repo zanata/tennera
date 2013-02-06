@@ -50,11 +50,8 @@
 
   <!-- Sub Project Modules to Build -->
 	<modules>
-<!--
 		<module>ant-gettext</module>
 		<module>webgettext</module>
--->
-		<module>jgettext</module>
 	</modules>
 	<issueManagement>
 		<system>GitHub</system>

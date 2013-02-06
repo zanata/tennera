@@ -1,2 +1,0 @@
-msgid "msgid with _\r_ escape\n"
-msgstr "msgstr with _\r_ escape\n"

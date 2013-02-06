@@ -1,2 +1,0 @@
-msgid "ends with escaped EOL: \n"
-msgstr "ends with escaped EOL: \n"
