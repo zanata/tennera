@@ -118,7 +118,7 @@ offers lookups of localised strings using an EL resolver for ResourceBundle</des
         <dependency>
 		  <groupId>javax.el</groupId>
 		  <artifactId>el-api</artifactId>
-		  <version>1.0</version>
+		  <version>1.1.1-b02</version>
           <scope>provided</scope>
         </dependency> 
 		<dependency>
@@ -130,7 +130,7 @@ offers lookups of localised strings using an EL resolver for ResourceBundle</des
         <dependency>
 		  <groupId>javax.servlet.jsp</groupId>
 		  <artifactId>jsp-api</artifactId>
-		  <version>2.1</version>
+		  <version>2.2.1</version>
           <scope>provided</scope>
         </dependency> 
         <dependency>
